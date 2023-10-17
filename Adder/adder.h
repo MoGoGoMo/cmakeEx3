@@ -1,5 +1,5 @@
-namespace mearlymath
+namespace mearlyMath
 {
     int add(int a, int b);
     float add(float a, float b);
-} // namespace mearlymath
+} // namespace mearlyMath
