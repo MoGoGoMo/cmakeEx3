@@ -1,5 +1,5 @@
 #include <iostream>
-#include <adder.h>
+#include <cmakeEx3_config.h>
 #define GLAD_GL_IMPLEMENTATION
 #include <glad/gl.h>
 #define GLFW_INCLUDE_NONE
@@ -8,7 +8,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include <cmakeEx3_config.h>
 
 using namespace std;
 
@@ -264,7 +263,13 @@ void key( GLFWwindow* window, int k, int s, int action, int mods )
 int main(int argc, char const *argv[])
 {
     cout << "Hey, Gordon!\n";
-    cout << mearlyMath::add(72.4f, 83.2f) << "\n";
+
+    #ifdef USE_ADDER
+      cout << mearlyMath::add(72.4f, 83.2f) << "\n";
+    #else
+      cout << "Definition of Adder is missing." << endl;
+    #endif
+
     cout << argv[0] << " VERSION " << PROJECT_VERSION_MAJOR << "." << PROJECT_VERSION_MINOR << "." << PROJECT_VERSION_PATCH << "\n" << endl;
 
     GLFWwindow* window;

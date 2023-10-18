@@ -10,10 +10,20 @@ set(CONFIG_STRING "PROJECT VERSION CONFIG FILE")
 configure_file(cmakeEx3_config.h.in cmakeEx3_config.h)
 
 project(cmakeEx3)
-
 add_executable(${PROJECT_NAME} main.cpp)
 
-add_subdirectory(Adder)
+option(USE_ADDER, "a simple add two float number" ON)
+if(USE_ADDER)
+    add_subdirectory(Adder)
+    list(APPEND EXTRA_LIBS "${CMAKE_BINARY_DIR}/Adder/")
+    list(APPEND EXTRA_INCLUDES "${PROJECT_SOURCE_DIR}/Adder")
+    # target_include_directories(${PROJECT_NAME} 
+    #     PUBLIC Adder 
+    # )
+    # target_link_directories(${PROJECT_NAME}
+    #     PUBLIC Adder
+    # )
+endif()
 
 # Download ALL the SUBMODULES
 find_package(Git QUIET)
@@ -39,22 +49,26 @@ endif()
 add_subdirectory(external/glfw)
 
 target_include_directories(${PROJECT_NAME} 
-    PUBLIC Adder 
+    # PUBLIC Adder 
     PUBLIC external/glfw/include
     PUBLIC external/glfw/deps
+    ${EXTRA_INCLUDES}
 )
 
 target_link_directories(${PROJECT_NAME}
-    PRIVATE Adder
+    # PRIVATE Adder
     PRIVATE external/glfw/src
     PRIVATE external/glfw/deps
+    ${EXTRA_LIBS}
 ) 
 
 # 包含生成的头文件目录
 include_directories(${CMAKE_BINARY_DIR})
 
+# find_library(mearlyMath mearlymath ${CMAKE_BINARY_DIR}/Adder)
+
 # 将生成的头文件添加到项目中
 target_sources(${PROJECT_NAME} 
     PRIVATE ${CMAKE_BINARY_DIR}/cmakeEx3_config.h)   
 
-target_link_libraries(${PROJECT_NAME} mearlymath glfw)
+target_link_libraries(${PROJECT_NAME} ${EXTRA_LIBS} glfw)
