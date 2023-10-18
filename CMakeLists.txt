@@ -1,5 +1,14 @@
 cmake_minimum_required(VERSION 3.27.7)
 
+# 设置一些配置参数(如版本号)
+set(PROJECT_VERSION_MAJOR 1)
+set(PROJECT_VERSION_MINOR 0)
+set(PROJECT_VERSION_PATCH 0)
+set(CONFIG_STRING "PROJECT VERSION CONFIG FILE")
+
+# 使用 configure_file 生成头文件
+configure_file(cmakeEx3_config.h.in cmakeEx3_config.h)
+
 project(cmakeEx3)
 
 add_executable(${PROJECT_NAME} main.cpp)
@@ -27,7 +36,7 @@ if(NOT EXISTS "${PROJECT_SOURCE_DIR}/external/glfw/CMakeLists.txt")
     message(FATAL_ERROR "The glfw submodules was not downloaded! GIT_SUBMODULE was turned off or failed. please check!")    
 endif()
 
-  add_subdirectory(external/glfw)
+add_subdirectory(external/glfw)
 
 target_include_directories(${PROJECT_NAME} 
     PUBLIC Adder 
@@ -40,5 +49,12 @@ target_link_directories(${PROJECT_NAME}
     PRIVATE external/glfw/src
     PRIVATE external/glfw/deps
 ) 
+
+# 包含生成的头文件目录
+include_directories(${CMAKE_BINARY_DIR})
+
+# 将生成的头文件添加到项目中
+target_sources(${PROJECT_NAME} 
+    PRIVATE ${CMAKE_BINARY_DIR}/cmakeEx3_config.h)   
 
 target_link_libraries(${PROJECT_NAME} mearlymath glfw)

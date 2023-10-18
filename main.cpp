@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <cmakeEx3_config.h>
 
 using namespace std;
 
@@ -264,6 +265,7 @@ int main(int argc, char const *argv[])
 {
     cout << "Hey, Gordon!\n";
     cout << mearlyMath::add(72.4f, 83.2f) << "\n";
+    cout << argv[0] << " VERSION " << PROJECT_VERSION_MAJOR << "." << PROJECT_VERSION_MINOR << "." << PROJECT_VERSION_PATCH << "\n" << endl;
 
     GLFWwindow* window;
     int width, height;
@@ -277,7 +279,7 @@ int main(int argc, char const *argv[])
     glfwWindowHint(GLFW_DEPTH_BITS, 16);
     glfwWindowHint(GLFW_TRANSPARENT_FRAMEBUFFER, GLFW_TRUE);
 
-    window = glfwCreateWindow( 300, 300, "Gears", NULL, NULL );
+    window = glfwCreateWindow( 600, 600, "Gears", NULL, NULL );
     if (!window)
     {
         fprintf( stderr, "Failed to open GLFW window\n" );
