@@ -62,3 +62,6 @@ target_link_directories(${PROJECT_NAME}
 include_directories(${CMAKE_BINARY_DIR})
 
 target_link_libraries(${PROJECT_NAME} ${EXTRA_LINKS} glfw)
+
+install(TARGETS ${PROJECT_NAME} DESTINATION bin)
+install(FILES "${PROJECT_BINARY_DIR}/cmakeEx3_config.h" DESTINATION include)
